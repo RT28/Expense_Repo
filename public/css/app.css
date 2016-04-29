@@ -1,0 +1,25 @@
+html, body
+{
+    margin-top: 10px;
+}
+
+.btn-link
+{
+    padding: 0px;
+}
+
+label
+{
+    font-weight: 500;
+}
+
+
+@media (min-width: 992px)
+{
+    .table-responsive
+    {
+        max-height: 245px;
+        min-height: 245px;
+    }
+}
+
