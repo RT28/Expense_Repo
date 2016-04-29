@@ -1,8 +1,8 @@
 var Expense = require('./models/expense');
 
 module.exports = function(app) {    
-    var response = {"expenses": {}, "aggregate": {}};
-    app.get("/api/expenses", function(req, res) {
+    function returnData(req, res) {
+        var response = {"expenses": {}, "aggregate": {}};
         Expense.find(function(err, expenses){
             if(err) {
                 res.send(err);
@@ -23,34 +23,18 @@ module.exports = function(app) {
                 res.json(response);
             });            
         }).sort("EDate");
+    }
+    
+    app.get("/api/expenses", function(req, res) {
+        returnData(req, res);
     });
     
-    app.post("/api/expenses", function(req, res) {
-        var response = {"expenses": {}, "aggregate": {}};
+    app.post("/api/expenses", function(req, res) {        
         Expense.create(req.body, function(err, expenses) {
             if(err) {
                 res.send(err);
             }
-            Expense.find(function(err, expenses) {
-                if(err) {   
-                    res.send(err);
-                }
-                response.expenses = expenses;
-                Expense.aggregate([{
-                    $group: {
-                        _id: "$EType",
-                        y: {
-                            $sum: "$Amount"
-                        }
-                    },
-                }],function(err, result){
-                    if(err) {
-                        res.send(err);
-                    }
-                    response.aggregate = result;
-                    res.json(response);
-                });
-            }).sort("EDate");
+            returnData(req, res);
         });
     });
     
@@ -62,26 +46,7 @@ module.exports = function(app) {
             if(err) {
                 res.send(err);
             }
-            Expense.find(function(err, expenses){
-                if(err) {
-                    res.send(err);
-                }
-                response.expenses = expenses;
-                Expense.aggregate([{
-                    $group: {
-                        _id: "$EType",
-                        y: {
-                            $sum: "$Amount"
-                        }
-                    },
-                }],function(err, result){
-                    if(err) {
-                        res.send(err);
-                    }
-                    response.aggregate = result;
-                    res.json(response);
-                });
-            }).sort("EDate");
+            returnData(req, res);
         });
     });
     
@@ -98,26 +63,7 @@ module.exports = function(app) {
             if(err) {
                 res.send(err);
             }
-            Expense.find(function(err, expenses) {
-                if(err) {
-                    res.send(err);
-                }
-                response.expenses = expenses;
-                Expense.aggregate([{
-                    $group: {
-                        _id: "$EType",
-                        y: {
-                            $sum: "$Amount"
-                        }
-                    },
-                }],function(err, result){
-                    if(err) {
-                        res.send(err);
-                    }
-                    response.aggregate = result;
-                    res.json(response);
-                });
-            }).sort("EDate");;
+            returnData(req, res);
         });
     });
     //application    

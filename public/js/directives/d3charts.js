@@ -14,9 +14,13 @@ angular.module("expenseCharts", [])
                         xAxis: {
                             categories: scope.y.map(function(d){return $filter("date")(d.EDate, "MM/dd/yyyy");})
                         },
+                        title: {
+                            text: 'Expense Detail'
+                        },
                         series: [{
                             data: scope.y.map(function(d){return d.Amount;}),
-                            type: 'column'
+                            type: 'column',
+                            title: 'Expense Detail'
                         }]
                     });
                 };
