@@ -1,1 +1,1 @@
-angular.module('zyloon', ['mainController', 'expenseService', 'expenseCharts']);
+angular.module('expense', ['mainController', 'expenseService', 'expenseCharts']);

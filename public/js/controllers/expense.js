@@ -14,9 +14,9 @@ angular.module("mainController", [])
         };
         
         Expenses.get()
-            .success(function(data){
-                $scope.expenses = data.expenses;
-                $scope.aggregate = data.aggregate;                
+            .then(function(data){
+                $scope.expenses = data.data.expenses || [];
+                $scope.aggregate = data.data.aggregate || [];                
             });
         
         $scope.createExpense = function() {
@@ -24,19 +24,19 @@ angular.module("mainController", [])
                 if($scope.isUpdate === true) {
                     $scope.isUpdate = false;
                     Expenses.update($scope.formData)
-                        .success(function(data){
+                        .then(function(data){
                             $scope.formData = {};
                             $scope.isUpdate = false;
-                            $scope.expenses = data.expenses;
-                            $scope.aggregate = data.aggregate;
+                            $scope.expenses = data.data.expenses;
+                            $scope.aggregate = data.data.aggregate;
                         });                        
                 }
                 else {
                     Expenses.create($scope.formData)
-                    .success(function(data){
+                    .then(function(data){
                         $scope.formData = {};
-                        $scope.expenses = data.expenses;
-                        $scope.aggregate = data.aggregate;
+                        $scope.expenses = data.data.expenses;
+                        $scope.aggregate = data.data.aggregate;
                     });
                 }               
             }
@@ -44,9 +44,9 @@ angular.module("mainController", [])
         
         $scope.deleteExpenses = function(expenses) {
             Expenses.delete(expenses._id)
-                .success(function(data) {
-                    $scope.expenses = data.expenses;
-                    $scope.aggregate = data.aggregate;
+                .then(function(data) {
+                    $scope.expenses = data.data.expenses;
+                    $scope.aggregate = data.data.aggregate;
                     $scope.formData = {};
                 });
         };
